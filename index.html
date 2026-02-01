@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Think Carefully</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 60px;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 22px;
+      margin: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2 id="qno">Loading...</h2>
+<p id="question">Please wait</p>
+
+<div id="options"></div>
+
+<script>
+let step = 0;
+
+const correctSequence = [7, 9, 2, 0];
+
+const questions = [
+  {
+    q: "What matters most in love?",
+    options: [
+      { text: "Money", value: 3 },
+      { text: "Trust", value: 7 },
+      { text: "Fame", value: 1 },
+      { text: "Luck", value: 5 }
+    ]
+  },
+  {
+    q: "What makes someone irreplaceable?",
+    options: [
+      { text: "Looks", value: 4 },
+      { text: "Care", value: 9 },
+      { text: "Status", value: 6 },
+      { text: "Power", value: 8 }
+    ]
+  },
+  {
+    q: "What keeps a bond alive?",
+    options: [
+      { text: "Silence", value: 5 },
+      { text: "Understanding", value: 2 },
+      { text: "Distance", value: 7 },
+      { text: "Ego", value: 1 }
+    ]
+  },
+  {
+    q: "Who is this message meant for?",
+    options: [
+      { text: "Everyone", value: 4 },
+      { text: "No one", value: 1 },
+      { text: "Mariya", value: 0 },
+      { text: "The world", value: 6 }
+    ]
+  }
+];
+
+function loadQuestion() {
+  document.getElementById("qno").innerText =
+    "Question " + (step + 1);
+
+  document.getElementById("question").innerText =
+    questions[step].q;
+
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+
+  questions[step].options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt.text;
+    btn.onclick = function () {
+      checkAnswer(opt.value);
+    };
+    box.appendChild(btn);
+    box.appendChild(document.createElement("br"));
+  });
+}
+
+function checkAnswer(val) {
+  if (val === correctSequence[step]) {
+    step++;
+    if (step === correctSequence.length) {
+      window.location.href = "secret.html";
+    } else {
+      loadQuestion();
+    }
+  } else {
+    step = 0;
+    loadQuestion();
+  }
+}
+
+window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
